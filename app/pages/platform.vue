@@ -117,8 +117,16 @@ const openThirdPartyPay = () => {
   // 保存订单信息到 localStorage，供支付结果页使用
   localStorage.setItem('current_order', JSON.stringify(orderInfo.value))
 
-  const redirectUrl = encodeURIComponent(window.location.origin + `/platform?orderId=${orderId.value}`)
-  window.open(`/thirdpay?orderId=${orderId.value}&redirect=${redirectUrl}`, '_blank')
+  // 使用 useRouter 获取正确的路径（包含 baseURL）
+  const router = useRouter()
+  const thirdpayRoute = router.resolve({
+    path: '/thirdpay',
+    query: { orderId: orderId.value }
+  })
+  
+  // 构建完整的 URL（包含 baseURL）
+  const fullUrl = window.location.origin + thirdpayRoute.href
+  window.open(fullUrl, '_blank')
 }
 
 // 监听 localStorage 变化

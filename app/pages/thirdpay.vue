@@ -42,14 +42,26 @@ const redirectUrl = ref<string>('')
 
 // 模拟支付成功 - 使用 302 重定向
 const handleSuccess = () => {
+  // 使用 useRouter 获取正确的路径（包含 baseURL）
+  const router = useRouter()
+  const successRoute = router.resolve({
+    path: '/pay/success',
+    query: { orderId: orderId.value }
+  })
   // 使用 window.location.href 实现类似 302 重定向的效果
-  window.location.href = `/pay/success?orderId=${orderId.value}`
+  window.location.href = successRoute.href
 }
 
 // 模拟支付失败 - 使用 302 重定向
 const handleFail = () => {
+  // 使用 useRouter 获取正确的路径（包含 baseURL）
+  const router = useRouter()
+  const failRoute = router.resolve({
+    path: '/pay/fail',
+    query: { orderId: orderId.value }
+  })
   // 使用 window.location.href 实现类似 302 重定向的效果
-  window.location.href = `/pay/fail?orderId=${orderId.value}`
+  window.location.href = failRoute.href
 }
 
 onMounted(() => {
