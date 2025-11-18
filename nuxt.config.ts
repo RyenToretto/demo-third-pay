@@ -23,6 +23,9 @@ export default defineNuxtConfig({
 
   // 应用配置
   app: {
+    // GitHub Pages 部署时的基础路径
+    baseURL: process.env.NODE_ENV === 'production' ? '/demo-third-pay/' : '/',
+    
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
@@ -40,7 +43,13 @@ export default defineNuxtConfig({
 
   // 静态生成配置（用于 GitHub Pages 等静态部署）
   generate: {
-    routes: ['/'],
+    routes: [
+      '/',
+      '/platform',
+      '/thirdpay',
+      '/pay/success',
+      '/pay/fail',
+    ],
   },
 
   devtools: {
